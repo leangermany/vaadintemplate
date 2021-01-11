@@ -11,53 +11,23 @@ import de.ladam.template.util.i18n.TranslationKey;
 
 public class AppDrawerItems {
 
-	public static ExtendedList<SidebarChildVM> buildSet() {
-		ExtendedList<SidebarChildVM> list = new ExtendedList<>();
+	public static ExtendedList<SidebarMenuItem> buildSet() {
+		ExtendedList<SidebarMenuItem> list = new ExtendedList<>();
 
-		list.add(new SidebarChildVM(TranslationKey.DRAWER_TAB_INVENTORY, InventoryWrapper.class));
-		list.add(new SidebarChildVM(TranslationKey.DRAWER_TAB_ABOUT, AboutView.class));
-		list.add(new SidebarChildVM(TranslationKey.DRAWER_TAB_ADMIN, AdminView.class));
+		list.add(new SidebarMenuItem(TranslationKey.DRAWER_TAB_INVENTORY, InventoryWrapper.class));
+		list.add(new SidebarMenuItem(TranslationKey.DRAWER_TAB_ABOUT, AboutView.class));
+		list.add(new SidebarMenuItem(TranslationKey.DRAWER_TAB_ADMIN, AdminView.class));
 
 		return list;
 	}
 
-	public static class SidebarParentVM {
-
-		private final VaadinIcon vaadinIcon;
-		private final TranslationKey translationKey;
-		private final ExtendedList<SidebarChildVM> children = new ExtendedList<>();
-
-		public SidebarParentVM(VaadinIcon vaadinIcon, TranslationKey translationKey) {
-			super();
-			this.vaadinIcon = vaadinIcon;
-			this.translationKey = translationKey;
-		}
-
-		public VaadinIcon getVaadinIcon() {
-			return vaadinIcon;
-		}
-
-		public TranslationKey getTranslationKey() {
-			return translationKey;
-		}
-
-		public ExtendedList<SidebarChildVM> getChildren() {
-			return children;
-		}
-
-		public void addChild(SidebarChildVM sidebarChildVM) {
-			this.children.add(sidebarChildVM);
-		}
-
-	}
-
-	public static class SidebarChildVM {
+	public static class SidebarMenuItem {
 
 		private final VaadinIcon vaadinIcon;
 		private final TranslationKey translationKey;
 		private final Class<? extends Component> targetClass;
 
-		public SidebarChildVM(TranslationKey translationKey, Class<? extends Component> targetClass) {
+		public SidebarMenuItem(TranslationKey translationKey, Class<? extends Component> targetClass) {
 			super();
 			this.vaadinIcon = VaadinIcon.CARET_RIGHT;
 			this.translationKey = translationKey;

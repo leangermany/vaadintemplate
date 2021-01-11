@@ -28,7 +28,7 @@ public class I18NResourceBundle extends ResourceBundle {
 	public I18NResourceBundle(Locale locale) {
 		this.locale = locale;
 
-		String path = direction + "catering_translation_" + locale.getISO3Language() + ".properties";
+		String path = direction + "translation_" + locale.getISO3Language() + ".properties";
 
 		try {
 			Properties properties = new Properties();

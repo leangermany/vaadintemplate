@@ -1,0 +1,78 @@
+<div class="inventorywrapper">
+    <style>
+        .inventorywrapper {
+            display: flex;
+            flex-direction: column;
+            margin: 20px !important;
+            padding: 20px !important;
+            width: calc(100% - 80px);
+            border: 1px solid lightgrey;
+        }
+
+        .inventorywrapper .caption {
+            font-size: 5vw;
+            text-align: center;
+            background: linear-gradient(-45deg, #ee7752, #e73c7e, #23a6d5, #23d5ab);
+            background-size: 400% 400%;
+            background-repeat: no-repeat;
+            background-attachment: fixed;
+            animation: gradient 15s ease infinite;
+        }
+
+        .inventorywrapper .subtitle {
+            font-weight: 400;
+            letter-spacing: 1px;
+            text-align: center;
+        }
+
+        .inventorywrapper ul>li {
+            margin-bottom: 10px;
+        }
+
+        .no-margin {
+            margin: 0;
+        }
+
+        @keyframes gradient {
+            0% {
+                background-position: 0% 50%;
+            }
+
+            50% {
+                background-position: 100% 50%;
+            }
+
+            100% {
+                background-position: 0% 50%;
+            }
+        }
+    </style>
+    <p class="caption">Vaadin Template Application</p>
+    <p class="subtitle">His wrapper an static HTML file import.</p>
+    <p>The template includes the following features:
+    <ul class="no-margin">
+        <li>Simple login control
+            <ul>
+                <li>Not usable for real applications</li>
+            </ul>
+        </li>
+        <li>Route permission annotation
+            <ul>
+                <li>@PermissionTab annotation can be used to give different roles permissions to specific views or
+                    routes.</li>
+            </ul>
+        </li>
+        <li>Theming
+            <ul>
+                <li>Themes are stored in "frontend/theme/custom-themes.css" and then imported via @CSSImport</li>
+            </ul>
+        </li>
+        <li>Internationalization
+            <ul>
+                <li>An implementation of I18NProvider is also included. The translation files are stored in the Java
+                    main/resources/translations. </li>
+            </ul>
+        </li>
+    </ul>
+    </p>
+</div>

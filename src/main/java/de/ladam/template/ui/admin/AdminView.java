@@ -38,17 +38,17 @@ public class AdminView extends VerticalLayout implements BeforeEnterObserver {
 
 	public AdminView() {
 		tabSheet.getTabBar().setAutoselect(true);
-		addTab("test", Admin_PermissionView.class);
+		addTab(TranslationKey.ADMIN_PERMISSION_CAPTION, Admin_PermissionView.class);
 		setMargin(false);
 		setPadding(false);
 		add(tabSheet.getLayout());
 	}
 
-	private void addTab(String title, Class<? extends Component> target) {
+	public void addTab(String title, Class<? extends Component> target) {
 		tabSheet.addTab(title, target);
 	}
 
-	private void addTab(TranslationKey translationKey, Class<? extends Component> target,
+	public void addTab(TranslationKey translationKey, Class<? extends Component> target,
 			Object... translationKeyParams) {
 		Tab tab = tabSheet.addTab(translationKey.getTranslation(translationKeyParams), target);
 		mappedTranslations.put(tab, () -> tab.setLabel(translationKey.getTranslation(translationKeyParams)));

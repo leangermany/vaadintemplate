@@ -42,6 +42,9 @@ import de.ladam.template.util.application.ApplicationLogger;
  * static.
  * <p>
  * <p>
+ * The translation files are automatically synchronized with the enum {@link TranslationKey} at application startup.
+ * </p>
+ * <p>
  * <b>How to use:</b>
  * </p>
  * <p>

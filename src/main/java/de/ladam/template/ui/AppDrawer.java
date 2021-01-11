@@ -37,7 +37,7 @@ import com.vaadin.flow.theme.lumo.Lumo;
 import de.ladam.template.authentication.AccessControlFactory;
 import de.ladam.template.authentication.TabPermissions;
 import de.ladam.template.authentication.User;
-import de.ladam.template.ui.AppDrawerItems.SidebarChildVM;
+import de.ladam.template.ui.AppDrawerItems.SidebarMenuItem;
 import de.ladam.template.ui.settings.SettingsView;
 import de.ladam.template.util.application.ApplicationLogger;
 import de.ladam.template.util.common.ExtendedList;
@@ -53,6 +53,12 @@ import de.ladam.template.viewmodels.SessionUserVM;
 @CssImport("./styles/shared-styles.css")
 @CssImport("styles/drawer-styles.css")
 @CssImport(value = "./styles/menu-buttons.css", themeFor = "vaadin-button")
+/**
+ * theme file is importetd here
+ * 
+ * @author lam
+ *
+ */
 @CssImport("./theme/custom-themes.css")
 public class AppDrawer extends AppLayout implements LocaleChangeObserver {
 
@@ -143,7 +149,7 @@ public class AppDrawer extends AppLayout implements LocaleChangeObserver {
 		return tab;
 	}
 
-	private static Tab createTab(SidebarChildVM sidebarChildVM) {
+	private static Tab createTab(SidebarMenuItem sidebarChildVM) {
 		return createTab(sidebarChildVM.getTranslationKey().getTranslation(), sidebarChildVM.getTargetClass());
 	}
 
@@ -161,9 +167,9 @@ public class AppDrawer extends AppLayout implements LocaleChangeObserver {
 	private void addTabsOnPersmission() {
 		menu.removeAll();
 		SessionUserVM user = User.getCurrent();
-		ExtendedList<SidebarChildVM> sidebarItems = AppDrawerItems.buildSet();
+		ExtendedList<SidebarMenuItem> sidebarItems = AppDrawerItems.buildSet();
 		sidebarItems.removeIf(item -> !TabPermissions.hasPermission(item.getTargetClass(), user));
-		for (SidebarChildVM sidebarChildVM : sidebarItems) {
+		for (SidebarMenuItem sidebarChildVM : sidebarItems) {
 			registerRoute(sidebarChildVM.getTargetClass());
 			addToMenu(createTab(sidebarChildVM));
 		}
