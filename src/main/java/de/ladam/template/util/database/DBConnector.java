@@ -144,8 +144,7 @@ public enum DBConnector {
 		if (con == null) {
 			ApplicationLogger.error("Connection is null");
 		} else {
-			// TODO debug control
-//			DebugControl.INSTANCE.ConnectionOpened();
+			// Debug Control
 		}
 
 		return con;
@@ -206,11 +205,7 @@ public enum DBConnector {
 				String user = properties.getProperty(prefix + ".User");
 //				String password = properties.getProperty(prefix + ".Password");
 				String portnumber = properties.getProperty(prefix + ".PortNumber");
-//				/**
-//				 * 16777216
-//				 */
 //				String maxAllowedPacketString = properties.getProperty(prefix + ".maxAllowedPacket");
-
 //				String serverTimezone = properties.getProperty(prefix + ".serverTimezone");
 
 				int port = 0;
@@ -227,8 +222,6 @@ public enum DBConnector {
 
 				if (databaseName == null || serverName == null || user == null /* || password == null */ || port == 0
 				/* || maxAllowedPacket == 0 */) {
-//				CateringError.Log_SystemPrint(new NullPointerException("Invalid Connection properties provided"),
-//						"DBConnector::createDatasource Invalid Connection properties provided", false, false, false);
 					ApplicationLogger.error("JDBC has one or more null value");
 					return null;
 				}
@@ -466,7 +459,7 @@ public enum DBConnector {
 				} catch (Exception e) {
 					con = null;
 				}
-				// TODO DebugControl
+				// DebugControl
 			}
 		}
 	}
