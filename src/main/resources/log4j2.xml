@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE xml>
+<Configuration status="trace" name="ApplicationLogger"
+	packages="">
+	<Appenders>
+		<Console name="Console" target="SYSTEM_OUT">
+			<PatternLayout
+				pattern="%d{HH:mm:ss.SSS} [%t] %-5level %logger{36} - %msg%n" />
+		</Console>
+
+		<RollingFile name="ApplicationLoggerRollingFile"
+			fileName="C:/Temp/ApplicationLogger.log"
+			filePattern="C:/Temp/archive/ApplicationLogger-%d{MM-dd-yy}.log.gz">
+			<PatternLayout
+				pattern="%d{yyyy-MM-dd HH:mm:ss.SSS} %level %l --> %msg%n" /> <!-- %X{username} -->
+			<Policies>
+				<TimeBasedTriggeringPolicy />
+				<SizeBasedTriggeringPolicy size="250 MB" />
+			</Policies>
+			<DefaultRolloverStrategy max="10">
+				<!-- Nested conditions: the inner condition is only evaluated on files 
+					for which the outer conditions are true. <Delete basePath="${baseDir}" maxDepth="2"> 
+					<IfFileName glob="*/app-*.log.gz"> <IfLastModified age="30d"> <IfAny> <IfAccumulatedFileSize 
+					exceeds="10 GB" /> <IfAccumulatedFileCount exceeds="10" /> </IfAny> </IfLastModified> 
+					</IfFileName> </Delete> -->
+			</DefaultRolloverStrategy>
+		</RollingFile>
+	</Appenders>
+	<Loggers>
+		<Logger name="ApplicationLogger" level="trace">
+			<AppenderRef ref="ApplicationLoggerRollingFile" />
+		</Logger>
+		<Root level="error">
+			<AppenderRef ref="Console" />
+		</Root>
+	</Loggers>
+</Configuration>

@@ -1,0 +1,13 @@
+{
+    "name": "Template",
+    "lang": "de",
+    "start_url": "/",
+    "theme_color": "#fff",
+    "background_color": "#011A27",
+    "display": "standalone",
+    "icons": [{
+        "src": "./icons/icon.png",
+        "sizes": "1000x1000",
+        "type": "image/png"
+    }]
+}
