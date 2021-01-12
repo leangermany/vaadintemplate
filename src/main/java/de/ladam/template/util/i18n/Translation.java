@@ -42,7 +42,8 @@ import de.ladam.template.util.application.ApplicationLogger;
  * static.
  * <p>
  * <p>
- * The translation files are automatically synchronized with the enum {@link TranslationKey} at application startup.
+ * The translation files are automatically synchronized with the enum
+ * {@link TranslationKey} at application startup.
  * </p>
  * <p>
  * <b>How to use:</b>
@@ -185,8 +186,8 @@ public class Translation implements I18NProvider {
 
 		for (Locale locale : locals) {
 
-			Path p = Paths.get("src\\main\\resources\\translations",
-					String.format("catering_translation_%s.properties", locale.getISO3Language()));
+			Path p = Paths.get("src/main/resources",
+					String.format(I18NResourceBundle.directionPattern, locale.getISO3Language()));
 
 			syncFile(p, locale);
 

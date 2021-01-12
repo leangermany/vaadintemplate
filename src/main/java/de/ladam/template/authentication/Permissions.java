@@ -9,28 +9,28 @@ import java.util.Set;
 import org.reflections.Reflections;
 
 import de.ladam.template.util.application.ApplicationLogger;
-import de.ladam.template.util.application.PermissionTab;
 import de.ladam.template.util.common.AttributeRefresh;
 import de.ladam.template.util.common.ExtendedList;
+import de.ladam.template.util.interfaces.PermissionTab;
 import de.ladam.template.viewmodels.PermissionVM;
 import de.ladam.template.viewmodels.RoleVM;
 import de.ladam.template.viewmodels.SessionUserVM;
 
-public class TabPermissions implements AttributeRefresh {
+public class Permissions implements AttributeRefresh {
 
 	public static final String parentPackage = "de.ladam.template";
 
-	private static TabPermissions instance = null;
+	private static Permissions instance = null;
 
-	public static TabPermissions instance() {
-		return instance == null ? instance = new TabPermissions() : instance;
+	public static Permissions instance() {
+		return instance == null ? instance = new Permissions() : instance;
 	}
 
 	private final HashMap<Class<?>, PermissionVM> permissionVMs = new HashMap<Class<?>, PermissionVM>();
 	private LocalDateTime lastRefresh = null;
 	private final static int refreshDelayMinutes = 10;
 
-	private TabPermissions() {
+	private Permissions() {
 		init();
 	}
 

@@ -1,4 +1,4 @@
-package de.ladam.template.ui;
+package de.ladam.template.ui.error;
 
 import com.vaadin.flow.component.html.H1;
 import com.vaadin.flow.component.html.Span;
@@ -11,6 +11,7 @@ import com.vaadin.flow.router.ParentLayout;
 
 import de.ladam.template.authentication.AccessControl;
 import de.ladam.template.authentication.AccessControlFactory;
+import de.ladam.template.ui.AppDrawer;
 import de.ladam.template.ui.login.LoginScreen;
 
 import javax.servlet.http.HttpServletResponse;
@@ -21,11 +22,11 @@ import javax.servlet.http.HttpServletResponse;
  * @author vaadin
  */
 @ParentLayout(AppDrawer.class)
-public class ErrorView extends VerticalLayout implements HasErrorParameter<NotFoundException> {
+public class NotFoundExceptionView extends VerticalLayout implements HasErrorParameter<NotFoundException> {
 
     private Span explanation;
 
-    public ErrorView() {
+    public NotFoundExceptionView() {
         H1 header = new H1("The view could not be found.");
         add(header);
 

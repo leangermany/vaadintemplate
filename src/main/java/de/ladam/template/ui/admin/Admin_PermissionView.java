@@ -13,7 +13,7 @@ import com.vaadin.flow.i18n.LocaleChangeEvent;
 import com.vaadin.flow.i18n.LocaleChangeObserver;
 
 import de.ladam.template.authentication.Role;
-import de.ladam.template.authentication.TabPermissions;
+import de.ladam.template.authentication.Permissions;
 import de.ladam.template.util.i18n.TranslationKey;
 import de.ladam.template.viewmodels.PermissionVM;
 
@@ -42,7 +42,7 @@ public class Admin_PermissionView extends VerticalLayout implements LocaleChange
 		roleGrid.setItems(Role.getAllRoles());
 		roleGrid.setEnabled(false);
 
-		permissionGrid.setItems(TabPermissions.instance().getPermissionVMs().values());
+		permissionGrid.setItems(Permissions.instance().getPermissionVMs().values());
 		permissionGrid.addSelectionListener(selectionEvent -> {
 			roleGrid.deselectAll();
 			if (permissionGrid.asSingleSelect().getOptionalValue().isPresent()) {

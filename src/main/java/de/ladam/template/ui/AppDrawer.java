@@ -22,6 +22,8 @@ import com.vaadin.flow.component.tabs.Tabs;
 import com.vaadin.flow.component.tabs.TabsVariant;
 import com.vaadin.flow.i18n.LocaleChangeEvent;
 import com.vaadin.flow.i18n.LocaleChangeObserver;
+import com.vaadin.flow.router.BeforeEnterEvent;
+import com.vaadin.flow.router.BeforeEnterObserver;
 import com.vaadin.flow.router.HasDynamicTitle;
 import com.vaadin.flow.router.PageTitle;
 import com.vaadin.flow.router.Route;
@@ -35,7 +37,7 @@ import com.vaadin.flow.theme.Theme;
 import com.vaadin.flow.theme.lumo.Lumo;
 
 import de.ladam.template.authentication.AccessControlFactory;
-import de.ladam.template.authentication.TabPermissions;
+import de.ladam.template.authentication.Permissions;
 import de.ladam.template.authentication.User;
 import de.ladam.template.ui.AppDrawerItems.SidebarMenuItem;
 import de.ladam.template.ui.settings.SettingsView;
@@ -49,7 +51,7 @@ import de.ladam.template.viewmodels.SessionUserVM;
  */
 @Push
 @Theme(value = Lumo.class)
-@PWA(name = "Template", shortName = "Template", enableInstallPrompt = false, manifestPath = "manifest.json")
+@PWA(name = "Template", shortName = "Template", enableInstallPrompt = true, manifestPath = "manifest.json")
 @CssImport("./styles/shared-styles.css")
 @CssImport("styles/drawer-styles.css")
 @CssImport(value = "./styles/menu-buttons.css", themeFor = "vaadin-button")
@@ -60,7 +62,7 @@ import de.ladam.template.viewmodels.SessionUserVM;
  *
  */
 @CssImport("./theme/custom-themes.css")
-public class AppDrawer extends AppLayout implements LocaleChangeObserver {
+public class AppDrawer extends AppLayout implements LocaleChangeObserver, BeforeEnterObserver {
 
 	public final String ApplicationName = "Template";
 
@@ -79,27 +81,22 @@ public class AppDrawer extends AppLayout implements LocaleChangeObserver {
 		// support
 		final String resolvedImage = VaadinService.getCurrent().resolveResource("img/table-logo.png",
 				VaadinSession.getCurrent().getBrowser());
-
 		logo = new Image(resolvedImage, "");
-
 		setPrimarySection(Section.DRAWER);
 		addToNavbar(false, createHeaderContent());
 		menu = createMenu();
 		addToDrawer(createDrawerContent(menu));
-
 		settingsButton.addThemeVariants(ButtonVariant.LUMO_TERTIARY);
 		settingsButton.addClassName("navbar-button");
 		settingsButton.addClickListener(route -> {
 			UI.getCurrent().navigate(SettingsView.class);
 		});
-
 		logoutButton.addThemeVariants(ButtonVariant.LUMO_TERTIARY);
 		logoutButton.addClassName("navbar-button");
 		logoutButton.setId("loginbutton");
 		logoutButton.addClickListener(route -> {
 			logout();
 		});
-
 	}
 
 	private Component createHeaderContent() {
@@ -168,7 +165,7 @@ public class AppDrawer extends AppLayout implements LocaleChangeObserver {
 		menu.removeAll();
 		SessionUserVM user = User.getCurrent();
 		ExtendedList<SidebarMenuItem> sidebarItems = AppDrawerItems.buildSet();
-		sidebarItems.removeIf(item -> !TabPermissions.hasPermission(item.getTargetClass(), user));
+		sidebarItems.removeIf(item -> !Permissions.hasPermission(item.getTargetClass(), user));
 		for (SidebarMenuItem sidebarChildVM : sidebarItems) {
 			registerRoute(sidebarChildVM.getTargetClass());
 			addToMenu(createTab(sidebarChildVM));
@@ -206,21 +203,38 @@ public class AppDrawer extends AppLayout implements LocaleChangeObserver {
 		setText();
 	}
 
+	@Override
+	public void beforeEnter(BeforeEnterEvent event) {
+		/**
+		 * the beforeEnter method isn't useful for building something visually, because
+		 * it's called on every navigation on child layouts.<br>
+		 * It could be used to check on permission rights: Permissions.hasPermission(event.getNavigationTarget())
+		 * 
+		 * @author lam
+		 */
+	}
+
 	private void registerRoute(Class<? extends Component> target) {
 		// register the view dynamically only for this session
-		if (!RouteConfiguration.forSessionScope().isRouteRegistered(target)) {
-			ApplicationLogger.trace("registering route for target: " + target.getSimpleName());
-			RouteConfiguration.forSessionScope().setRoute(target.getAnnotation(Route.class).value(), target,
-					this.getClass());
-			// as logout will purge the session route registry, no need to
-			// unregister the view on logout
-
+		// as logout will purge the session route registry, no need to
+		// unregister the view on logout
+		try {
+			if (!RouteConfiguration.forSessionScope().isRouteRegistered(target)) {
+				ApplicationLogger.trace("registering route for target: " + target.getSimpleName());
+				RouteConfiguration.forSessionScope().setRoute(target.getAnnotation(Route.class).value(), target,
+						this.getClass());
+			}
+			// register @RouteAlias if not already present to session scope
 			if (target.isAnnotationPresent(RouteAlias.class)) {
 				for (RouteAlias alias : target.getAnnotationsByType(RouteAlias.class)) {
-					ApplicationLogger.trace("registering alias for target: " + target.getSimpleName());
-					RouteConfiguration.forSessionScope().setRoute(alias.value(), target, this.getClass());
+					if (!RouteConfiguration.forSessionScope().isRouteRegistered(target)) {
+						ApplicationLogger.trace("registering alias for target: " + target.getSimpleName());
+						RouteConfiguration.forSessionScope().setRoute(alias.value(), target, this.getClass());
+					}
 				}
 			}
+		} catch (Exception e) {
+			e.printStackTrace();
 		}
 	}
 

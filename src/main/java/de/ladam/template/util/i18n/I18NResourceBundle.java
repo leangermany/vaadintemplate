@@ -23,12 +23,12 @@ public class I18NResourceBundle extends ResourceBundle {
 	/**
 	 * fullpath "src/main/resources/translations/"
 	 */
-	private final static String direction = "translations/";
+	public final static String directionPattern = "translations/translation_%s.properties";
 
 	public I18NResourceBundle(Locale locale) {
 		this.locale = locale;
 
-		String path = direction + "translation_" + locale.getISO3Language() + ".properties";
+		String path = String.format(directionPattern, locale.getISO3Language());
 
 		try {
 			Properties properties = new Properties();

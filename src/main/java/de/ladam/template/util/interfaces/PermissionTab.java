@@ -1,4 +1,4 @@
-package de.ladam.template.util.application;
+package de.ladam.template.util.interfaces;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;

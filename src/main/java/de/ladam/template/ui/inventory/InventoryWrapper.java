@@ -9,10 +9,10 @@ import com.vaadin.flow.router.HasDynamicTitle;
 import com.vaadin.flow.router.Route;
 import com.vaadin.flow.router.RouteAlias;
 
-import de.ladam.template.authentication.TabPermissions;
+import de.ladam.template.authentication.Permissions;
 import de.ladam.template.ui.AppDrawer;
-import de.ladam.template.util.application.PermissionTab;
 import de.ladam.template.util.i18n.TranslationKey;
+import de.ladam.template.util.interfaces.PermissionTab;
 
 @Route(value = "inventory", layout = AppDrawer.class)
 @RouteAlias(value = "", layout = AppDrawer.class)
@@ -24,7 +24,7 @@ public class InventoryWrapper extends Div implements BeforeEnterObserver, HasDyn
 	@Override
 	public void beforeEnter(BeforeEnterEvent event) {
 		// checks if user has permission
-		if (TabPermissions.hasPermission(this.getClass())) {
+		if (Permissions.hasPermission(this.getClass())) {
 			initView();
 		} else {
 			// if not route to error view

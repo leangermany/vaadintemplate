@@ -12,24 +12,23 @@ import com.vaadin.flow.router.BeforeEnterObserver;
 import com.vaadin.flow.router.PageTitle;
 import com.vaadin.flow.router.Route;
 
-import de.ladam.template.authentication.TabPermissions;
+import de.ladam.template.authentication.Permissions;
 import de.ladam.template.ui.AppDrawer;
 import de.ladam.template.ui.components.tabsheet.TabSheet2;
-import de.ladam.template.util.application.PermissionTab;
 import de.ladam.template.util.i18n.TranslationKey;
+import de.ladam.template.util.interfaces.PermissionTab;
 
 /**
  * Admin view that is registered dynamically on admin user login.
  * 
  * <p>
  * Note from ladam: A nested RouterLayout shouldn't have Route. Bug in
- * 14.4.5?<br>
- * Helped with {@link AdminRoute}.
+ * 14.4.5? Can have a Route Prefix<br>
  * </p>
  * 
  */
 @PageTitle("Admin")
-@Route(value = "admin", layout = AppDrawer.class)
+@Route(value = "admin", layout = AppDrawer.class, registerAtStartup = false)
 @PermissionTab(key = "db5ad5c0-ba75-4c7f-a7b2-5d2ef12e8242", name = "AdminView")
 public class AdminView extends VerticalLayout implements BeforeEnterObserver {
 
@@ -57,7 +56,7 @@ public class AdminView extends VerticalLayout implements BeforeEnterObserver {
 	@Override
 	public void beforeEnter(BeforeEnterEvent event) {
 		// checking for permission
-		if (!TabPermissions.hasPermission(this.getClass())) {
+		if (!Permissions.hasPermission(this.getClass())) {
 			event.rerouteToError(NoPermissionException.class);
 		}
 	}

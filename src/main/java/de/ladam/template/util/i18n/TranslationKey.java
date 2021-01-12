@@ -37,7 +37,7 @@ public enum TranslationKey {
 	/*
 	 * AboutView
 	 */
-	ABOUT_INFO_PARAMS,
+	ABOUT_INFO_PARAMS, ABOUT_GITHUB,
 	/*
 	 * Admin -> TabPermissionManagement
 	 */
