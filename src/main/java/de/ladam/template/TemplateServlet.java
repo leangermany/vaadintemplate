@@ -9,6 +9,7 @@ import com.vaadin.flow.server.VaadinServlet;
 /**
  * 
  * <p>https://vaadin.com/docs/flow/advanced/tutorial-all-vaadin-properties.html</p>
+ * <p>https://vaadin.com/docs/flow/advanced/tutorial-flow-runtime-configuration.html<p>
  * 
  * @author leand
  *
