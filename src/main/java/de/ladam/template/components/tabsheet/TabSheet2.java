@@ -1,4 +1,4 @@
-package de.ladam.template.ui.components.tabsheet;
+package de.ladam.template.components.tabsheet;
 
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;

@@ -13,8 +13,8 @@ import com.vaadin.flow.router.PageTitle;
 import com.vaadin.flow.router.Route;
 
 import de.ladam.template.authentication.Permissions;
+import de.ladam.template.components.tabsheet.TabSheet2;
 import de.ladam.template.ui.AppDrawer;
-import de.ladam.template.ui.components.tabsheet.TabSheet2;
 import de.ladam.template.util.i18n.TranslationKey;
 import de.ladam.template.util.interfaces.PermissionTab;
 

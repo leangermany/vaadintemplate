@@ -39,6 +39,10 @@ public enum TranslationKey {
 	 */
 	ABOUT_INFO_PARAMS, ABOUT_GITHUB,
 	/*
+	 * 
+	 */
+	ELEMENT_TITLE,
+	/*
 	 * Admin -> TabPermissionManagement
 	 */
 	ADMIN_PERMISSION_CAPTION, ADMIN_PERMISSION_GRID_TABS, ADMIN_PERMISSION_GRID_GROUPS, ADMIN_PERMISSION_INFO,

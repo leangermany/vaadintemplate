@@ -30,7 +30,9 @@ import com.vaadin.flow.router.Route;
 import com.vaadin.flow.router.RouteAlias;
 import com.vaadin.flow.router.RouteConfiguration;
 import com.vaadin.flow.router.RouterLink;
+import com.vaadin.flow.server.InitialPageSettings;
 import com.vaadin.flow.server.PWA;
+import com.vaadin.flow.server.PageConfigurator;
 import com.vaadin.flow.server.VaadinService;
 import com.vaadin.flow.server.VaadinSession;
 import com.vaadin.flow.theme.Theme;
@@ -62,7 +64,7 @@ import de.ladam.template.viewmodels.SessionUserVM;
  *
  */
 @CssImport("./theme/custom-themes.css")
-public class AppDrawer extends AppLayout implements LocaleChangeObserver, BeforeEnterObserver {
+public class AppDrawer extends AppLayout implements LocaleChangeObserver, BeforeEnterObserver, PageConfigurator {
 
 	public final String ApplicationName = "Template";
 
@@ -208,7 +210,8 @@ public class AppDrawer extends AppLayout implements LocaleChangeObserver, Before
 		/**
 		 * the beforeEnter method isn't useful for building something visually, because
 		 * it's called on every navigation on child layouts.<br>
-		 * It could be used to check on permission rights: Permissions.hasPermission(event.getNavigationTarget())
+		 * It could be used to check on permission rights:
+		 * Permissions.hasPermission(event.getNavigationTarget())
 		 * 
 		 * @author lam
 		 */
@@ -247,6 +250,35 @@ public class AppDrawer extends AppLayout implements LocaleChangeObserver, Before
 	private void setText() {
 		settingsButton.setText(TranslationKey.SETTINGS_TITLE.getTranslation());
 		logoutButton.setText(TranslationKey.LOGOUT_BUTTON.getTranslation());
+	}
+
+	@Override
+	public void configurePage(InitialPageSettings settings) {
+		/**
+		 * change this to remove the default style completely or set css !importent
+		 * values for class .v-loading-indicator<br>
+		 * https://vaadin.com/docs/v14/flow/advanced/tutorial-loading-indicator.html
+		 */
+		settings.getLoadingIndicatorConfiguration().setApplyDefaultTheme(true);
+
+		/**
+		 * meta tags added to the html head
+		 */
+		settings.addMetaTag("title", "Vaadin Template Application");
+		settings.addMetaTag("description", "This is a Webpage with How-Tos and Infos");
+		settings.addMetaTag("keywords", "vaadin, template");
+
+		settings.addMetaTag("og:title", "Vaadin Template Application");
+		settings.addMetaTag("og:type", "Website");
+		settings.addMetaTag("og:description", "This is a Webpage with How-Tos and Infos Nachrichten und Chatrooms");
+		settings.addMetaTag("og:url", "www.domain.de");
+		settings.addMetaTag("og:site_name", "Vaadin Template Application");
+		settings.addMetaTag("og:locale", "en_EN");
+
+		// Use this for adding javascript import to your html head
+		// the folder is /src/main/webapp/frontend/
+		// UI.getCurrent().getPage().addJavaScript("url/file.js");
+
 	}
 
 }

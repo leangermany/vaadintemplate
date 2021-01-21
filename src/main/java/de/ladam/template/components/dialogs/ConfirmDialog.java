@@ -1,4 +1,4 @@
-package de.ladam.template.ui.components.dialogs;
+package de.ladam.template.components.dialogs;
 
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.button.ButtonVariant;

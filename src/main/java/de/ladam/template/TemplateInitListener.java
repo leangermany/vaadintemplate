@@ -20,6 +20,11 @@ public class TemplateInitListener implements VaadinServiceInitListener {
 	@Override
 	public void serviceInit(ServiceInitEvent initEvent) {
 		Translation.setup();
+		/**
+		 * FIXME this does not work, if the application is deployed a longer time:
+		 * classloader error: could not load class <br>
+		 * look at {@link TemplateServlet}
+		 */
 //		System.setProperty("vaadin.i18n.provider", Translation.class.getName());
 
 		final AccessControl accessControl = AccessControlFactory.getInstance().createAccessControl();
