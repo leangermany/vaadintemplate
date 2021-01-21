@@ -9,8 +9,8 @@
 		</Console>
 
 		<RollingFile name="ApplicationLoggerRollingFile"
-			fileName="C:/Temp/ApplicationLogger.log"
-			filePattern="C:/Temp/archive/ApplicationLogger-%d{MM-dd-yy}.log.gz">
+			fileName="/tmp/logs/ApplicationLogger.log"
+			filePattern="/tmp/logs/archive/ApplicationLogger-%d{MM-dd-yy}.log.gz">
 			<PatternLayout
 				pattern="%d{yyyy-MM-dd HH:mm:ss.SSS} %level %l --> %msg%n" /> <!-- %X{username} -->
 			<Policies>

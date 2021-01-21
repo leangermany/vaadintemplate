@@ -13,12 +13,15 @@ import de.ladam.template.util.i18n.Translation;
 /**
  * This class is used to listen to BeforeEnter event of all UIs in order to
  * check whether a user is signed in or not before allowing entering any page.
- * It is registered in a file named
- * com.vaadin.flow.server.TemplateInitListener in META-INF/services.
+ * It is registered in a file named com.vaadin.flow.server.TemplateInitListener
+ * in META-INF/services.
  */
 public class TemplateInitListener implements VaadinServiceInitListener {
 	@Override
 	public void serviceInit(ServiceInitEvent initEvent) {
+		Translation.setup();
+//		System.setProperty("vaadin.i18n.provider", Translation.class.getName());
+
 		final AccessControl accessControl = AccessControlFactory.getInstance().createAccessControl();
 
 		initEvent.getSource().addUIInitListener(uiInitEvent -> {
@@ -30,7 +33,5 @@ public class TemplateInitListener implements VaadinServiceInitListener {
 			});
 			uiInitEvent.getUI().setLocale(LocaleCookie.get());
 		});
-
-		Translation.setup();
 	}
 }

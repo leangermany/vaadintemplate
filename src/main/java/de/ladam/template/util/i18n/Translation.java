@@ -1,7 +1,5 @@
 package de.ladam.template.util.i18n;
 
-import static java.lang.System.setProperty;
-
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -130,10 +128,10 @@ public class Translation implements I18NProvider {
 			loadResources();
 			syncFiles();
 			settedUp = true;
-			setProperty("vaadin.i18n.provider", Translation.class.getName());
 		} else {
 			ApplicationLogger.debug("Translation Setup called, but it was already setted up.");
 		}
+//		setProperty("vaadin.i18n.provider", Translation.class.getName());
 	}
 
 	/**

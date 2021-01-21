@@ -22,7 +22,6 @@ public class AboutView extends VerticalLayout implements HasDynamicTitle, Locale
 	private final Span info = new Span();
 	private final Span github = new Span();
 
-
 	public AboutView() {
 		add(VaadinIcon.INFO_CIRCLE.create());
 		add(info, github);

@@ -5,6 +5,8 @@ import java.io.InputStream;
 import com.vaadin.flow.component.Html;
 import com.vaadin.flow.component.html.Div;
 import com.vaadin.flow.component.html.Span;
+import com.vaadin.flow.component.notification.Notification;
+import com.vaadin.flow.component.notification.Notification.Position;
 import com.vaadin.flow.component.orderedlayout.FlexLayout;
 import com.vaadin.flow.i18n.LocaleChangeEvent;
 import com.vaadin.flow.i18n.LocaleChangeObserver;
@@ -18,7 +20,12 @@ public class InventoryView extends FlexLayout implements LocaleChangeObserver {
 	private final static String htmlResource = "html/inventory.html";
 
 	public InventoryView() {
-		InputStream is = InventoryView.class.getClassLoader().getResourceAsStream(htmlResource);
+		InputStream is = null;
+		try {
+			is = InventoryView.class.getClassLoader().getResourceAsStream(htmlResource);
+		} catch (Exception e) {
+			Notification.show("Error on class loader", 3000, Position.BOTTOM_END);
+		}
 		if (is == null) {
 			removeAll();
 			add(new Div(new Span("resouce not found")));

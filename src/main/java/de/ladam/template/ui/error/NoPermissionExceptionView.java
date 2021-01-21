@@ -9,11 +9,14 @@ import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.router.BeforeEnterEvent;
 import com.vaadin.flow.router.ErrorParameter;
 import com.vaadin.flow.router.HasErrorParameter;
+import com.vaadin.flow.router.ParentLayout;
 
 import de.ladam.template.authentication.AccessControl;
 import de.ladam.template.authentication.AccessControlFactory;
+import de.ladam.template.ui.AppDrawer;
 import de.ladam.template.ui.login.LoginScreen;
 
+@ParentLayout(AppDrawer.class)
 public class NoPermissionExceptionView extends VerticalLayout implements HasErrorParameter<NoPermissionException> {
 
 	private Span explanation;

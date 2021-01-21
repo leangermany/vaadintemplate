@@ -1,3 +1,11 @@
+#header {
+    font-size: 200%;
+}
+
+#drawer-toggle {
+    font-size: 200%;
+}
+
 .navbar-layout {
     background-color: rgba(66, 66, 66, 0.1);
 }
