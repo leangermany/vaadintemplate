@@ -16,7 +16,7 @@ import de.ladam.template.util.interfaces.PermissionTab;
 
 @Route(value = "inventory", layout = AppDrawer.class)
 @RouteAlias(value = "", layout = AppDrawer.class)
-@PermissionTab(key = "a5254b62-b12a-4326-82b6-fc84a0d60eec", name = "InventoryView")
+//@PermissionTab(key = "a5254b62-b12a-4326-82b6-fc84a0d60eec", name = "InventoryView")
 public class InventoryWrapper extends Div implements BeforeEnterObserver, HasDynamicTitle {
 
 	private InventoryView view = null;

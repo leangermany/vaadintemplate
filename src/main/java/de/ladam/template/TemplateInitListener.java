@@ -19,7 +19,7 @@ import de.ladam.template.util.i18n.Translation;
 public class TemplateInitListener implements VaadinServiceInitListener {
 	@Override
 	public void serviceInit(ServiceInitEvent initEvent) {
-		Translation.setup();
+
 		/**
 		 * FIXME this does not work, if the application is deployed a longer time:
 		 * classloader error: could not load class <br>
@@ -30,6 +30,8 @@ public class TemplateInitListener implements VaadinServiceInitListener {
 		final AccessControl accessControl = AccessControlFactory.getInstance().createAccessControl();
 
 		initEvent.getSource().addUIInitListener(uiInitEvent -> {
+//			System.setProperty("vaadin.i18n.provider", Translation.class.getName());
+
 			uiInitEvent.getUI().addBeforeEnterListener(enterEvent -> {
 				if (!accessControl.isUserSignedIn() && !LoginScreen.class.equals(enterEvent.getNavigationTarget())) {
 					enterEvent.rerouteTo(LoginScreen.class);

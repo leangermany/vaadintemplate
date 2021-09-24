@@ -29,7 +29,6 @@ import de.ladam.template.util.interfaces.PermissionTab;
  */
 @PageTitle("Admin")
 @Route(value = "admin", layout = AppDrawer.class, registerAtStartup = false)
-@PermissionTab(key = "db5ad5c0-ba75-4c7f-a7b2-5d2ef12e8242", name = "AdminView")
 public class AdminView extends VerticalLayout implements BeforeEnterObserver {
 
 	private TabSheet2 tabSheet = new TabSheet2();

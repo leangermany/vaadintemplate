@@ -33,7 +33,6 @@ public class BasicAccessControl implements AccessControl {
 		return true;
 	}
 
-	@Deprecated
 	private void templateRoles(SessionUserVM sessionUserVM) {
 		sessionUserVM.addRole(Role.getRole(1));
 		if (sessionUserVM.getName().toLowerCase().equals("admin")) {

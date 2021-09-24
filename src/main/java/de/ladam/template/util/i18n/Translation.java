@@ -68,13 +68,13 @@ import de.ladam.template.util.application.ApplicationLogger;
 public class Translation implements I18NProvider {
 	private static final long serialVersionUID = -4194904582307869399L;
 
-	private static final Map<String, I18NResourceBundle> resources = new HashMap<>();
-	private static final Locale[] locals = { Locale.GERMAN, Locale.ENGLISH };
-	private static final Locale defaultLocale = Locale.ENGLISH;
+	private final Map<String, I18NResourceBundle> resources = new HashMap<>();
+	private final Locale[] locals = { Locale.ENGLISH, Locale.GERMAN };
+	private final Locale defaultLocale = Locale.ENGLISH;
 
 	private static boolean settedUp = false;
 
-	public static void loadResources() {
+	public void loadResources() {
 
 		for (Locale locale : locals) {
 			I18NResourceBundle RESOURCE_BUNDLE = new I18NResourceBundle(locale);
@@ -86,6 +86,7 @@ public class Translation implements I18NProvider {
 	}
 
 	public Translation() {
+		setup();
 	}
 
 	@Override
@@ -122,7 +123,7 @@ public class Translation implements I18NProvider {
 
 	}
 
-	public static void setup() {
+	public void setup() {
 		if (!settedUp) {
 			ApplicationLogger.debug("Translation Setup...");
 			loadResources();
@@ -131,7 +132,6 @@ public class Translation implements I18NProvider {
 		} else {
 			ApplicationLogger.debug("Translation Setup called, but it was already setted up.");
 		}
-//		setProperty("vaadin.i18n.provider", Translation.class.getName());
 	}
 
 	/**
@@ -162,7 +162,7 @@ public class Translation implements I18NProvider {
 		return UI.getCurrent().getLocale();
 	}
 
-	public static Locale getLocaleByISO3Code(String iso3code) {
+	public Locale getLocaleByISO3Code(String iso3code) {
 		if (iso3code != null)
 			for (Locale locale : locals) {
 				if (locale.getISO3Language().equals(iso3code))
@@ -180,7 +180,7 @@ public class Translation implements I18NProvider {
 		return locale_comboBox;
 	}
 
-	public static void syncFiles() {
+	public void syncFiles() {
 
 		for (Locale locale : locals) {
 
@@ -193,7 +193,7 @@ public class Translation implements I18NProvider {
 
 	}
 
-	private static void syncFile(Path path, Locale locale) {
+	private void syncFile(Path path, Locale locale) {
 
 		boolean synced = false;
 

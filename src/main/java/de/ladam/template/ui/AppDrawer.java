@@ -1,10 +1,7 @@
 package de.ladam.template.ui;
 
-import java.util.Optional;
-
 import com.vaadin.flow.component.AttachEvent;
 import com.vaadin.flow.component.Component;
-import com.vaadin.flow.component.ComponentUtil;
 import com.vaadin.flow.component.UI;
 import com.vaadin.flow.component.applayout.AppLayout;
 import com.vaadin.flow.component.applayout.DrawerToggle;
@@ -17,9 +14,6 @@ import com.vaadin.flow.component.orderedlayout.FlexComponent;
 import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.component.page.Push;
-import com.vaadin.flow.component.tabs.Tab;
-import com.vaadin.flow.component.tabs.Tabs;
-import com.vaadin.flow.component.tabs.TabsVariant;
 import com.vaadin.flow.i18n.LocaleChangeEvent;
 import com.vaadin.flow.i18n.LocaleChangeObserver;
 import com.vaadin.flow.router.BeforeEnterEvent;
@@ -29,7 +23,6 @@ import com.vaadin.flow.router.PageTitle;
 import com.vaadin.flow.router.Route;
 import com.vaadin.flow.router.RouteAlias;
 import com.vaadin.flow.router.RouteConfiguration;
-import com.vaadin.flow.router.RouterLink;
 import com.vaadin.flow.server.InitialPageSettings;
 import com.vaadin.flow.server.PWA;
 import com.vaadin.flow.server.PageConfigurator;
@@ -73,7 +66,8 @@ public class AppDrawer extends AppLayout implements LocaleChangeObserver, Before
 
 	private final Button settingsButton = new Button();
 	private final Button logoutButton = new Button();
-	private final Tabs menu;
+	private final VerticalLayout menu;
+	private final VerticalLayout subMenu = new VerticalLayout();
 
 	private Span navbarTitle;
 
@@ -88,13 +82,11 @@ public class AppDrawer extends AppLayout implements LocaleChangeObserver, Before
 		addToNavbar(false, createHeaderContent());
 		menu = createMenu();
 		addToDrawer(createDrawerContent(menu));
-		settingsButton.addThemeVariants(ButtonVariant.LUMO_TERTIARY);
-		settingsButton.addClassName("navbar-button");
+		settingsButton.addThemeVariants(ButtonVariant.LUMO_TERTIARY_INLINE);
 		settingsButton.addClickListener(route -> {
 			UI.getCurrent().navigate(SettingsView.class);
 		});
-		logoutButton.addThemeVariants(ButtonVariant.LUMO_TERTIARY);
-		logoutButton.addClassName("navbar-button");
+		logoutButton.addThemeVariants(ButtonVariant.LUMO_TERTIARY_INLINE);
 		logoutButton.setId("loginbutton");
 		logoutButton.addClickListener(route -> {
 			logout();
@@ -114,7 +106,7 @@ public class AppDrawer extends AppLayout implements LocaleChangeObserver, Before
 		return layout;
 	}
 
-	private Component createDrawerContent(Tabs menu) {
+	private Component createDrawerContent(Component menu) {
 		VerticalLayout layout = new VerticalLayout();
 		layout.addClassName("navbar-layout");
 		layout.setSizeFull();
@@ -128,31 +120,32 @@ public class AppDrawer extends AppLayout implements LocaleChangeObserver, Before
 		logoLayout.add(logo);
 		logoLayout.add(applicationName);
 		logoLayout.getStyle().set("padding", "15px");
-		layout.add(logoLayout, menu, settingsButton, logoutButton);
+		subMenu.add(settingsButton, logoutButton);
+		subMenu.getThemeList().add("spacing-s");
+//		subMenu.setPadding(false);
+		layout.add(logoLayout, menu, subMenu);
 		return layout;
 	}
 
-	private Tabs createMenu() {
-		final Tabs tabs = new Tabs();
-		tabs.setOrientation(Tabs.Orientation.VERTICAL);
-		tabs.addThemeVariants(TabsVariant.LUMO_MINIMAL);
+	private VerticalLayout createMenu() {
+		final VerticalLayout tabs = new VerticalLayout();
 		tabs.setId("tabs");
-//		tabs.add(createMenuItems());
+		tabs.getThemeList().add("spacing-s");
 		return tabs;
 	}
 
-	private static Tab createTab(String text, Class<? extends Component> navigationTarget) {
-		final Tab tab = new Tab();
-		tab.add(new RouterLink(text, navigationTarget));
-		ComponentUtil.setData(tab, Class.class, navigationTarget);
-		return tab;
+	private static Button createTab(String text, Class<? extends Component> navigationTarget) {
+		Button b = new Button(text);
+		b.addClickListener(c -> UI.getCurrent().navigate(navigationTarget));
+		b.addThemeVariants(ButtonVariant.LUMO_TERTIARY_INLINE);
+		return b;
 	}
 
-	private static Tab createTab(SidebarMenuItem sidebarChildVM) {
+	private static Button createTab(SidebarMenuItem sidebarChildVM) {
 		return createTab(sidebarChildVM.getTranslationKey().getTranslation(), sidebarChildVM.getTargetClass());
 	}
 
-	private void addToMenu(Tab tab) {
+	private void addToMenu(Component tab) {
 		menu.add(tab);
 	}
 
@@ -177,13 +170,9 @@ public class AppDrawer extends AppLayout implements LocaleChangeObserver, Before
 	@Override
 	protected void afterNavigation() {
 		super.afterNavigation();
-		getTabForComponent(getContent()).ifPresent(menu::setSelectedTab);
 		navbarTitle.setText(getCurrentPageTitle());
-	}
-
-	private Optional<Tab> getTabForComponent(Component component) {
-		return menu.getChildren().filter(tab -> ComponentUtil.getData(tab, Class.class).equals(component.getClass()))
-				.findFirst().map(Tab.class::cast);
+		addTabsOnPersmission();
+		setText();
 	}
 
 	private String getCurrentPageTitle() {
@@ -201,8 +190,7 @@ public class AppDrawer extends AppLayout implements LocaleChangeObserver, Before
 	@Override
 	protected void onAttach(AttachEvent attachEvent) {
 		super.onAttach(attachEvent);
-		addTabsOnPersmission();
-		setText();
+
 	}
 
 	@Override

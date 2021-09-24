@@ -16,7 +16,6 @@ import de.ladam.template.util.i18n.TranslationKey;
 import de.ladam.template.util.interfaces.PermissionTab;
 
 @Route(value = "about", layout = AppDrawer.class)
-@PermissionTab(key = "1df7a87e-0c9f-4343-bb23-4c3f74d165fa", name = "AboutView")
 public class AboutView extends VerticalLayout implements HasDynamicTitle, LocaleChangeObserver {
 
 	private final Span info = new Span();
